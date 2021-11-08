@@ -9,45 +9,50 @@ var spotifyApi = new SpotifyWebApi({
 });
 
 //in order to access spotify api
-spotifyApi.setAccessToken('BQCwOxH1xUaX-rm59Rku47afb-Yjn94c5DMs8PPtBt4cAv212KRUSbJdJQnB5NX2qj60kehBpvzs7CKkYSLMI9zTWRZCWKhUDKk1_OX4hwLbopeViCQtzq4QtBa7SqkuOkrjkRTZGRhulPXjJrD_ZDfX2hZvR86wNw3-emHWAwH5_XRHuZocT7ae5sLi-UtVsa9keidXGw');
+spotifyApi.setAccessToken('BQBuiSJQzf7k5OSIw3jXJyuQGKaChcfnV0ufygM5BiFqDs6S3YxNHEDiS4uRDlKWs6SG1zr2EqUGK7iwFRnUgoLLo21bBpoT86Al5fJAA3wIJhm9XK28ZQqtAgsmIJYjjX03Pm-U3yU147WoQHRXUtbAWjCaW0cvk2m3ZceUwhvJRHiRve1vZGjrUmiIuAa_0LMfsU_MaQ');
 
 // access json data
 var data = JSON.parse(fs.readFileSync("sliceOne.json"));
-
 //for all songs, get analysis
 var uri;
 
 var uris = [];
-var trackInfo = []
-
+var playlists = [];
 for (var j = 0; j < 2; j++) {
   var playlist = data.playlists[j].tracks
-
   for (var i = 0; i < playlist.length; i++) {
     //track uri
     var uri = playlist[i].track_uri.split(":")[2]
-
     uris.push(uri);
+    playlists.push(j);
   }
 }
 
 console.log(uris);
 
-var file_body = "";
 
-spotifyApi.getAudioFeaturesForTracks(uris)
-  .then(function(data) {
-    //console.log(data.body.audio_features);
-    for (var i = 0; i < data.body.audio_features.length; i++) {
-      file_body += data.body.audio_features[i].danceability + "," + data.body.audio_features[0].energy + "," + data.body.audio_features[0].key + "," + data.body.audio_features[0].loudness + "," + data.body.audio_features[0].loudness +
-                    "," + data.body.audio_features[0].mode + "," + data.body.audio_features[0].speechiness + "," + data.body.audio_features[0].acousticness + "," + data.body.audio_features[0].instrumentalness +
-                    "," + data.body.audio_features[0].liveness + "," + data.body.audio_features[0].valence + "," + data.body.audio_features[0].tempo + "," + data.body.audio_features[0].id + "\n";
-    }
-    console.log(file_body);
-    fs.writeFile('sliceOne.arff', file_body, (err) => {
-      // In case of a error throw err.
-      if (err) throw err;
-    })
-  }, function(err) {
-    done(err);
-  });
+var file_body = "";
+console.log(uris[0]);
+console.log(playlists[0]);
+for (var i = 0; i < uris.length; i++) {
+  testing_call(uris[i], playlists[i]);
+}
+
+var file_body = "";
+function testing_call (uri, playlist) {
+  console.log(uri);
+    spotifyApi.getAudioFeaturesForTrack(uri)
+    .then(function(data) {
+      file_body += data.body.danceability + "," + data.body.energy + "," + data.body.key + "," + data.body.loudness +
+                     "," + data.body.speechiness + "," + data.body.acousticness + "," + data.body.instrumentalness +
+                      "," + data.body.liveness + "," + data.body.valence + "," + data.body.tempo + "," + ("playlist_" + playlist) + "," + data.body.id + "\n";
+      // console.log(file_body);
+      fs.writeFile('sliceOne.arff', file_body, (err) => {
+        // In case of a error throw err.
+        if (err) throw err;
+      })
+    }, function(err) {
+      console.log(err);
+    });
+  }
+  // console.log(file_body);
