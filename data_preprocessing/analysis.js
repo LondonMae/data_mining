@@ -2,28 +2,30 @@
 
 const fs = require("fs");
 
-var data = fs.readFileSync('london.arff').toString()
+var data = fs.readFileSync('tracks_features.arff').toString()
 var arr = data.substring(data.indexOf("@data")+6, data.length-1).split("\n");
 
-var map = {"danceability":[], "energy":[], "loudness":[], "speechiness":[], "acousticness":[], "instramentalness":[], "liveness":[], "valence":[], "tempo":[]}
+var map = {"danceability":[], "energy":[], "key":[], "loudness":[], "mode":[], "speechiness":[], "acousticness":[], "instramentalness":[], "liveness":[], "valence":[], "tempo":[]}
 var attr;
 for (var i = 0; i < arr.length; i++) {
   attr = arr[i].split(",");
-  map.danceability.push(attr[0]);
-  map.energy.push(attr[1]);
-  map.loudness.push(attr[3]);
-  map.speechiness.push(attr[4]);
-  map.acousticness.push(attr[5]);
-  map.instramentalness.push(attr[6]);
-  map.liveness.push(attr[7]);
-  map.valence.push(attr[8]);
-  map.tempo.push(attr[9]);
+  map.danceability.push(attr[1]);
+  map.energy.push(attr[2]);
+  map.key.push(attr[3]);
+  map.loudness.push(attr[4]);
+  map.mode.push(attr[5]);
+  map.speechiness.push(attr[6]);
+  map.acousticness.push(attr[7]);
+  map.instramentalness.push(attr[8]);
+  map.liveness.push(attr[9]);
+  map.valence.push(attr[10]);
+  map.tempo.push(attr[11]);
 }
 
 
 //console.log(map);
 
-var test = ["danceability", "energy", "loudness", "speechiness", "acousticness", "instramentalness", "liveness", "valence", "tempo"];
+var test = ["danceability", "energy", "key", "loudness", "mode", "speechiness", "acousticness", "instramentalness", "liveness", "valence", "tempo"];
 
 var combos = [];
 getCombinations(test);
