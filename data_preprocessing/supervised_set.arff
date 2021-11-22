@@ -1,3 +1,18 @@
+@relation song_type
+@attribute 'danceability' numeric
+@attribute 'energy' numeric
+@attribute 'key' numeric
+@attribute 'loudness' numeric
+@attribute 'speechiness' numeric
+@attribute 'acousticness' numeric
+@attribute 'instrumentalness' numeric
+@attribute 'liveness' numeric
+@attribute 'valence' numeric
+@attribute 'tempo' numeric
+@attribute 'class' string
+@attribute 'id' string
+
+@data
 0.904,0.813,4,-7.105,0.121,0.0311,0.00697,0.0471,0.81,125.461,playlist_0,0UaMYEvWZi0ZqiDOoHU3YI
 0.774,0.838,5,-3.914,0.114,0.0249,0.025,0.242,0.924,143.04,playlist_0,6I9VzXrHxO9rA9A5euc8Ak
 0.664,0.758,2,-6.583,0.21,0.00238,0,0.0598,0.701,99.259,playlist_0,0WqIKmW4BTrj3eJFmnCKMv
